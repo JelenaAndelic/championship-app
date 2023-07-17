@@ -1,12 +1,12 @@
 import { findFlagUrlByCountryName } from "country-flags-svg";
 
-const TeamDetailsTable = (props: any) => {
+const TeamDetailsTable = (props) => {
   return (
     <>
       <div>TeamDetailsTable</div>
       <table>
         <tbody>
-          {props.data.MRData.RaceTable.Races.map((teamResult: any, i: any) => {
+          {props.data.MRData.RaceTable.Races.map((teamResult, i) => {
             const { raceName } = teamResult;
             const { position: positionVet, points: pointVet } =
               teamResult.Results[0];

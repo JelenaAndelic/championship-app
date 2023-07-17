@@ -2,7 +2,7 @@ import TeamsTable from "../components/TeamsTable";
 import { useLoaderData } from "react-router-dom";
 
 const Teams = () => {
-  const teamStandings: any = useLoaderData();
+  const teamStandings = useLoaderData();
 
   const { name } =
     teamStandings.MRData.StandingsTable.StandingsLists[0]

@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import TeamDetailsTable from "../components/TeamDetailsTable";
 import { findFlagUrlByNationality } from "country-flags-svg";
+import externalLink from "../../public/external-link-svgrepo-com.svg";
 
 const TeamDetails = () => {
-  const [teamInfo, setTeamInfo] = useState<any[]>([]);
-  const teamDetailData: any = useLoaderData();
+  const [teamInfo, setTeamInfo] = useState([]);
+  const teamDetailData = useLoaderData();
 
   const [teamDetail, teamDetailTable] = teamDetailData;
 
@@ -47,7 +48,10 @@ const TeamDetails = () => {
           if (team.startsWith("http")) {
             return (
               <li key={i}>
-                History: <Link to={team}>Details</Link>
+                History:{" "}
+                <Link to={team}>
+                  <img style={{ width: 40, height: 20 }} src={externalLink} />
+                </Link>
               </li>
             );
           }
@@ -61,7 +65,7 @@ const TeamDetails = () => {
 
 export default TeamDetails;
 
-export const loader = async ({ params }: { params: any }) => {
+export const loader = async ({ params }) => {
   try {
     const response = await fetch(
       `http://ergast.com/api/f1/2013/constructors/${params.teamId}/constructorStandings.json`

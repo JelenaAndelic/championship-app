@@ -3,7 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import DriversTable from "../components/DriversTable";
 
 const Drivers = () => {
-  const driversData: any = useLoaderData();
+  const driversData = useLoaderData();
 
   return (
     <>

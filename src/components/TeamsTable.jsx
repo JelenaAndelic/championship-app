@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { findFlagUrlByNationality } from "country-flags-svg";
 
-const TeamsTable = (props: any) => {
+const TeamsTable = (props) => {
   return (
     <>
       <div>TeamsTable</div>
       <table>
         <tbody>
           {props.teamData.MRData?.StandingsTable.StandingsLists[0].ConstructorStandings.map(
-            (team: any, i: any) => {
+            (team, i) => {
               const { name, url, nationality, constructorId } =
                 team.Constructor;
               const { points } = team;

@@ -1,17 +1,19 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DriverDetailsTable from "../components/DriverDetailsTable";
 import { findFlagUrlByNationality } from "country-flags-svg";
+import externalLink from "../../public/external-link-svgrepo-com.svg";
 
 const DriverDetails = () => {
-  const [driverInfo, setDriverInfo] = useState<any[]>([]);
+  const [driverInfo, setDriverInfo] = useState([]);
 
-  const driverDetailData: any = useLoaderData();
+  const driverDetailData = useLoaderData();
 
   const { name: team } =
     driverDetailData[0].MRData?.ConstructorTable.Constructors[0];
   const {
     givenName,
+    url,
     familyName,
     dateOfBirth: birth,
     nationality,
@@ -41,6 +43,13 @@ const DriverDetails = () => {
         {driverInfo.map((driver, i) => (
           <li key={i}>{driver}</li>
         ))}
+        <li>
+          Biography:{" "}
+          <Link to={url}>
+            {" "}
+            <img style={{ width: 40, height: 20 }} src={externalLink} />{" "}
+          </Link>
+        </li>
       </ul>
       <DriverDetailsTable data={tableData} />
     </>
@@ -49,7 +58,7 @@ const DriverDetails = () => {
 
 export default DriverDetails;
 
-export const loader = async ({ params }: { params: any }) => {
+export const loader = async ({ params }) => {
   try {
     const response = await fetch(
       `https://ergast.com/api/f1/2013/drivers/${params.driverId}.json`

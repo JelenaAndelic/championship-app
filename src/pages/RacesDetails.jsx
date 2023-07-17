@@ -1,17 +1,18 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import FirstRaceDetailsTable from "../components/FirstRaceDetailsTable";
 import SecondRaceDetailsTable from "../components/SecondRaceDetailsTable";
 import { findFlagUrlByCountryName } from "country-flags-svg";
+import externalLink from "../../public/external-link-svgrepo-com.svg";
 
 const RacesDetails = () => {
-  const [raceInfo, setRaceInfo] = useState<any[]>([]);
+  const [raceInfo, setRaceInfo] = useState([]);
 
-  const raceFullDetailData: any = useLoaderData();
+  const raceFullDetailData = useLoaderData();
 
   const [raceDetailData, qualifyingData, resultsData] = raceFullDetailData;
 
-  const { raceName, date } = raceDetailData.MRData?.RaceTable.Races[0];
+  const { raceName, date, url } = raceDetailData.MRData?.RaceTable.Races[0];
   const { locality: location, country } =
     raceDetailData.MRData?.RaceTable.Races[0].Circuit.Location;
 
@@ -39,6 +40,12 @@ const RacesDetails = () => {
         {raceInfo.map((race, i) => (
           <li key={i}>{race}</li>
         ))}
+        <li>
+          Full Report:{" "}
+          <Link to={url}>
+            <img style={{ width: 40, height: 20 }} src={externalLink} />
+          </Link>
+        </li>
       </ul>
       <FirstRaceDetailsTable data={qualifyingData} />
       <hr />
@@ -49,7 +56,7 @@ const RacesDetails = () => {
 
 export default RacesDetails;
 
-export const loader = async ({ params }: { params: any }) => {
+export const loader = async ({ params }) => {
   try {
     const response = await fetch(
       `https://ergast.com/api/f1/2013/${params.raceId}.json`

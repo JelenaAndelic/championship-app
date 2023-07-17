@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { findFlagUrlByCountryName } from "country-flags-svg";
 
-const RacesTable = (props: any) => {
+const RacesTable = (props) => {
   return (
     <>
       <div>Races Table</div>
       <table>
         <tbody>
-          {props.data.MRData?.RaceTable.Races.map((race: any, i: any) => {
+          {props.data.MRData?.RaceTable.Races.map((race, i) => {
             const { raceName, round, date } = race;
             const { circuitName } = race.Circuit;
             const { familyName: winner } = race.Results[0].Driver;
