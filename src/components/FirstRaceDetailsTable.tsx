@@ -1,4 +1,4 @@
-import React from "react";
+import { findFlagUrlByNationality } from "country-flags-svg";
 
 const FirstRaceDetailsTable = (props: any) => {
   return (
@@ -8,7 +8,6 @@ const FirstRaceDetailsTable = (props: any) => {
         <tbody>
           {props.data.MRData?.RaceTable.Races[0].QualifyingResults.map(
             (race: any, i: any) => {
-              console.log(Number.parseInt(race.Q1));
               const { familyName } = race.Driver;
               const { name: team } = race.Constructor;
               const { nationality } = race.Driver;
@@ -26,7 +25,12 @@ const FirstRaceDetailsTable = (props: any) => {
                 <tr key={i}>
                   <td>{i + 1}</td>
                   <td>
-                    {familyName} {nationality}
+                    {familyName}{" "}
+                    <img
+                      style={{ width: 40, height: 20 }}
+                      src={findFlagUrlByNationality(nationality)}
+                      alt={nationality + "flag"}
+                    />
                   </td>
                   <td>{team}</td>
                   <td>{bestTime}</td>

@@ -1,4 +1,4 @@
-import React from "react";
+import { findFlagUrlByNationality } from "country-flags-svg";
 
 const SecondRaceDetailsTable = (props: any) => {
   return (
@@ -11,19 +11,24 @@ const SecondRaceDetailsTable = (props: any) => {
               const { familyName } = race.Driver;
               const { name: team } = race.Constructor;
               const { nationality } = race.Driver;
-              let time = null;
-              if (race.Time.time) {
-                time = race.Time.time;
-              }
+              const { time } = race.Time || { time: null };
+              const { status } = race;
+              const { points } = race;
 
               return (
                 <tr key={i}>
                   <td>{i + 1}</td>
                   <td>
-                    {familyName} {nationality}
+                    {familyName}{" "}
+                    <img
+                      style={{ width: 40, height: 20 }}
+                      src={findFlagUrlByNationality(nationality)}
+                      alt={nationality + "flag"}
+                    />
                   </td>
                   <td>{team}</td>
-                  <td>{time ? time : ""}</td>
+                  <td>{time ? time : status}</td>
+                  <td>{points}</td>
                 </tr>
               );
             }

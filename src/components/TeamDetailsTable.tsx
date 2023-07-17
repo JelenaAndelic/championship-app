@@ -1,7 +1,6 @@
-import React from "react";
+import { findFlagUrlByCountryName } from "country-flags-svg";
 
 const TeamDetailsTable = (props: any) => {
-  console.log(props.data);
   return (
     <>
       <div>TeamDetailsTable</div>
@@ -9,14 +8,25 @@ const TeamDetailsTable = (props: any) => {
         <tbody>
           {props.data.MRData.RaceTable.Races.map((teamResult: any, i: any) => {
             const { raceName } = teamResult;
-            const { position: positionVet } = teamResult.Results[0];
-            const { position: positionWeb } = teamResult.Results[1];
-            const { points: pointVet } = teamResult.Results[0];
-            const { points: pointWeb } = teamResult.Results[1];
-            console.log(pointVet);
+            const { position: positionVet, points: pointVet } =
+              teamResult.Results[0];
+            const { position: positionWeb, points: pointWeb } =
+              teamResult.Results[1];
+            const { country } = teamResult.Circuit.Location;
+
             return (
               <tr key={i}>
-                <td>{raceName}</td>
+                <td>{i + 1}</td>
+                <td>
+                  <img
+                    style={{ width: 40, height: 20 }}
+                    src={findFlagUrlByCountryName(
+                      country != "Korea" ? country : "South Korea"
+                    )}
+                    alt={country + "flag"}
+                  />
+                  {raceName}
+                </td>
                 <td>{positionVet}</td>
                 <td>{positionWeb}</td>
                 <td>{parseInt(pointVet) + parseInt(pointWeb)}</td>

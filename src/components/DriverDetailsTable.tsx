@@ -1,8 +1,10 @@
+import { findFlagUrlByCountryName } from "country-flags-svg";
+
 const DriverDetailsTable = (props: any) => {
   console.log(props.data);
   return (
     <>
-      <div>DriverDetailsTable</div>;
+      <div>DriverDetailsTable</div>
       <table>
         <tbody>
           {props.data.MRData.RaceTable.Races.map(
@@ -11,12 +13,22 @@ const DriverDetailsTable = (props: any) => {
               const { grid } = driverResult.Results[0];
               const { name } = driverResult.Results[0].Constructor;
               const { position } = driverResult.Results[0];
+              const { country } = driverResult.Circuit.Location;
 
               return (
                 <tr key={i}>
-                  <td>{raceName}</td>
-                  <td>{grid}</td>
+                  <td>{i + 1}</td>
+                  <td>
+                    <img
+                      style={{ width: 40, height: 20 }}
+                      src={findFlagUrlByCountryName(
+                        country != "Korea" ? country : "South Korea"
+                      )}
+                    />{" "}
+                    {raceName}
+                  </td>
                   <td>{name}</td>
+                  <td>{grid}</td>
                   <td>{position}</td>
                 </tr>
               );

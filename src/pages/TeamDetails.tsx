@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import TeamDetailsTable from "../components/TeamDetailsTable";
+import { findFlagUrlByNationality } from "country-flags-svg";
 
 const TeamDetails = () => {
   const [teamInfo, setTeamInfo] = useState<any[]>([]);
@@ -33,7 +34,14 @@ const TeamDetails = () => {
 
   return (
     <>
-      <div>{name}</div>
+      <div>
+        <img
+          style={{ width: 40, height: 20 }}
+          src={findFlagUrlByNationality(nationality)}
+          alt={nationality + "flag"}
+        />
+        {name}
+      </div>
       <ul>
         {teamInfo.map((team, i) => {
           if (team.startsWith("http")) {

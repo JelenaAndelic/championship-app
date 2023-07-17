@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import FirstRaceDetailsTable from "../components/FirstRaceDetailsTable";
 import SecondRaceDetailsTable from "../components/SecondRaceDetailsTable";
+import { findFlagUrlByCountryName } from "country-flags-svg";
 
 const RacesDetails = () => {
   const [raceInfo, setRaceInfo] = useState<any[]>([]);
@@ -10,10 +11,9 @@ const RacesDetails = () => {
 
   const [raceDetailData, qualifyingData, resultsData] = raceFullDetailData;
 
-  const { raceName } = raceDetailData.MRData?.RaceTable.Races[0];
+  const { raceName, date } = raceDetailData.MRData?.RaceTable.Races[0];
   const { locality: location, country } =
     raceDetailData.MRData?.RaceTable.Races[0].Circuit.Location;
-  const { date } = raceDetailData.MRData?.RaceTable.Races[0];
 
   useEffect(() => {
     setRaceInfo([
@@ -25,7 +25,16 @@ const RacesDetails = () => {
 
   return (
     <>
-      <div>{raceName}</div>
+      <div>
+        <img
+          style={{ width: 40, height: 20 }}
+          src={findFlagUrlByCountryName(
+            country != "Korea" ? country : "South Korea"
+          )}
+          alt={country + "flag"}
+        />
+        {raceName}
+      </div>
       <ul>
         {raceInfo.map((race, i) => (
           <li key={i}>{race}</li>

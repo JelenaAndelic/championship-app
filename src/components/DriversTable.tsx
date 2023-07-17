@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { findFlagUrlByNationality } from "country-flags-svg";
 
 const DriversTable = (props: any) => {
   console.log(props.drivers);
@@ -8,20 +9,21 @@ const DriversTable = (props: any) => {
       <table>
         <tbody>
           {props.drivers.MRData.StandingsTable.StandingsLists[0].DriverStandings.map(
-            (driver: any) => {
-              const {
-                driverId,
-                givenName,
-                familyName,
-                dateOfBirth,
-                nationality,
-              } = driver.Driver;
+            (driver: any, i: any) => {
+              const { driverId, givenName, familyName, nationality } =
+                driver.Driver;
               const { points } = driver;
               const { name } = driver.Constructors[0];
 
               return (
                 <tr key={driverId}>
+                  <td>{i + 1}</td>
                   <td>
+                    <img
+                      style={{ width: 40, height: 20 }}
+                      src={findFlagUrlByNationality(nationality)}
+                      alt={nationality + "flag"}
+                    />
                     <Link to={`${driverId}`}>
                       {" "}
                       {givenName} {familyName}

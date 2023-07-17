@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { findFlagUrlByNationality } from "country-flags-svg";
 
 const TeamsTable = (props: any) => {
   return (
@@ -8,14 +9,19 @@ const TeamsTable = (props: any) => {
         <tbody>
           {props.teamData.MRData?.StandingsTable.StandingsLists[0].ConstructorStandings.map(
             (team: any, i: any) => {
-              const { name } = team.Constructor;
-              const { url } = team.Constructor;
+              const { name, url, nationality, constructorId } =
+                team.Constructor;
               const { points } = team;
-              const { constructorId } = team.Constructor;
 
               return (
                 <tr key={i}>
+                  <td>{i + 1}</td>
                   <td>
+                    <img
+                      style={{ width: 40, height: 20 }}
+                      src={findFlagUrlByNationality(nationality)}
+                      alt={nationality + "flag"}
+                    />
                     <Link to={constructorId}>{name}</Link>
                   </td>
                   <td>

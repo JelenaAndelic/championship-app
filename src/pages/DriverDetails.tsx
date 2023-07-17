@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DriverDetailsTable from "../components/DriverDetailsTable";
+import { findFlagUrlByNationality } from "country-flags-svg";
 
 const DriverDetails = () => {
   const [driverInfo, setDriverInfo] = useState<any[]>([]);
@@ -29,6 +30,11 @@ const DriverDetails = () => {
   return (
     <>
       <div>
+        <img
+          style={{ width: 40, height: 20 }}
+          src={findFlagUrlByNationality(nationality)}
+          alt={nationality + "flag"}
+        />
         {givenName} {familyName}
       </div>
       <ul>
