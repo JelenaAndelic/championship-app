@@ -3,6 +3,8 @@ import { getDriverDetails, getDriverRaces } from "../api/driverApi";
 import { useGlobalContext } from "../context";
 import { useParams } from "react-router-dom";
 import { Loading } from "./Loading";
+import { findFlagUrlByNationality } from "country-flags-svg";
+import { findFlagUrlByCountryName } from "country-flags-svg";
 
 export const DriverDetail = () => {
   const { loading, setLoading, driverList } = useGlobalContext();
@@ -29,14 +31,6 @@ export const DriverDetail = () => {
     }
     getRaces();
   }, []);
-
-  // const racesOfDrivers = driverRaces.MRData?.RaceTable.Races.map((races) => {
-  //   const { raceName } = races;
-  //   const { position, grid } = races.Results[0];
-  //   console.log(raceName, position, grid);
-  // });
-
-  // console.log(racesOfDrivers);
 
   const allDrivers =
     driverList.MRData?.StandingsTable.StandingsLists[0].DriverStandings.map(
@@ -68,6 +62,11 @@ export const DriverDetail = () => {
           return (
             <div key={driverId}>
               <h2>
+                <img
+                  style={{ width: 40, height: 20 }}
+                  src={findFlagUrlByNationality(nationality)}
+                  alt={nationality + "flag"}
+                />
                 {givenName} {familyName}
               </h2>
               <h3>{dateOfBirth}</h3>
@@ -86,14 +85,25 @@ export const DriverDetail = () => {
             <th>Grid</th>
             <th>Race</th>
           </tr>
-          {driverRaces.MRData?.RaceTable.Races.map((races) => {
+          {driverRaces.MRData?.RaceTable.Races.map((races, i) => {
             const { raceName } = races;
             const { position, grid } = races.Results[0];
-            const { driverId } = races.Results[0].Driver;
+            // const { driverId } = races.Results[0].Driver;
+            const { country } = races.Circuit.Location;
             console.log(raceName, position, grid);
             return (
               <tr>
-                <td>{raceName}</td>
+                <td>{i + 1}</td>
+                <td>
+                  <img
+                    style={{ width: 40, height: 20 }}
+                    src={findFlagUrlByCountryName(
+                      country !== "Korea" ? country : "South Korea"
+                    )}
+                    alt={country + "flag"}
+                  />
+                  {raceName}
+                </td>
                 <td>{specificTeam}</td>
                 <td>{grid}</td>
                 <td>{position}</td>

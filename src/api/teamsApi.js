@@ -12,25 +12,25 @@ export async function getTeamsPerYear() {
   }
 }
 
-export async function getTeamDetails() {
+export async function getTeamDetails(id) {
   try {
     const response = await fetch(
-      "http://ergast.com/api/f1/2013/constructors/red_bull/constructorStandings.json"
+      `http://ergast.com/api/f1/2013/constructors/${id}/constructorStandings.json`
     );
     const data = await response.json();
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getTeamResultsPerYear() {
+export async function getTeamResultsPerYear(id) {
   try {
     const response = await fetch(
-      "https://ergast.com/api/f1/2013/constructors/red_bull/results.json"
+      `https://ergast.com/api/f1/2013/constructors/${id}/results.json`
     );
     const data = await response.json();
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }
