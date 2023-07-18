@@ -9,17 +9,33 @@ const useTableFilter = (initialData) => {
 
   const applyFilter = (data) => {
     return filterTable.length >= 4
-      ? data.filter(
-          (element) =>
-            element.Driver.givenName
+      ? data.filter((element) => {
+          const driverMatch =
+            element.Driver &&
+            element.Driver.givenName &&
+            element.Driver.familyName &&
+            (element.Driver.givenName.toLowerCase().includes(filterTable) ||
+              element.Driver.familyName
+                .toLowerCase()
+                .includes(filterTable.toLowerCase()));
+
+          const raceNameMatch =
+            element.raceName &&
+            element.raceName.toLowerCase().includes(filterTable.toLowerCase());
+          console.log(driverMatch, raceNameMatch);
+
+          const teamNameMatch =
+            element.Constructor &&
+            element.Constructor.name &&
+            element.Constructor.name
               .toLowerCase()
-              .includes(filterTable.toLowerCase()) ||
-            element.Driver.familyName
-              .toLowerCase()
-              .includes(filterTable.toLowerCase())
-        )
+              .includes(filterTable.toLowerCase());
+
+          return driverMatch || raceNameMatch || teamNameMatch;
+        })
       : data;
   };
+
   return [filterTable, handleFilterChange, applyFilter];
 };
 

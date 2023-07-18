@@ -1,13 +1,28 @@
 import { Link } from "react-router-dom";
 import { findFlagUrlByCountryName } from "country-flags-svg";
+import useTableFilter from "../hooks/useTableFilter";
 
 const RacesTable = (props) => {
+  const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
+    props.data.MRData.RaceTable.Races
+  );
+
+  const filteredDrivers = applyFilter(props.data.MRData.RaceTable.Races);
   return (
     <>
       <div>Races Table</div>
+      <div>
+        <label htmlFor="filter">Search:</label>
+        <input
+          type="text"
+          id="filter"
+          value={filterTable}
+          onChange={handleFilterChange}
+        />
+      </div>
       <table>
         <tbody>
-          {props.data.MRData?.RaceTable.Races.map((race, i) => {
+          {filteredDrivers.map((race, i) => {
             const { raceName, round, date } = race;
             const { circuitName } = race.Circuit;
             const { familyName: winner } = race.Results[0].Driver;

@@ -1,12 +1,29 @@
 import { findFlagUrlByNationality } from "country-flags-svg";
+import useTableFilter from "../hooks/useTableFilter";
 
 const SecondRaceDetailsTable = (props) => {
+  const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
+    props.data.MRData?.RaceTable.Races[0].Results
+  );
+
+  const filteredDrivers = applyFilter(
+    props.data.MRData?.RaceTable.Races[0].Results
+  );
   return (
     <>
-      <div>Qualifyiers Table</div>
+      <div>Race Results</div>
+      <div>
+        <label htmlFor="filter">Search:</label>
+        <input
+          type="text"
+          id="filter"
+          value={filterTable}
+          onChange={handleFilterChange}
+        />
+      </div>
       <table>
         <tbody>
-          {props.data.MRData?.RaceTable.Races[0].Results.map((race, i) => {
+          {filteredDrivers.map((race, i) => {
             const { familyName } = race.Driver;
             const { name: team } = race.Constructor;
             const { nationality } = race.Driver;

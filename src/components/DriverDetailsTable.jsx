@@ -6,6 +6,7 @@ const DriverDetailsTable = (props) => {
     props.data.MRData.RaceTable.Races
   );
 
+  console.log(props);
   const filteredDrivers = applyFilter(props.data.MRData.RaceTable.Races);
 
   return (
@@ -22,7 +23,7 @@ const DriverDetailsTable = (props) => {
       </div>
       <table>
         <tbody>
-          {props.data.MRData.RaceTable.Races.map((driverResult, i) => {
+          {filteredDrivers.map((driverResult, i) => {
             const { raceName } = driverResult;
             const { grid } = driverResult.Results[0];
             const { name } = driverResult.Results[0].Constructor;
