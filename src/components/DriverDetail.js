@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Loading } from "./Loading";
 import { findFlagUrlByNationality } from "country-flags-svg";
 import { findFlagUrlByCountryName } from "country-flags-svg";
+import useTableFilter from "../hooks/useTableFilter";
 
 export const DriverDetail = () => {
   const { loading, setLoading, driverList } = useGlobalContext();
@@ -31,6 +32,12 @@ export const DriverDetail = () => {
     }
     getRaces();
   }, []);
+
+  const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
+    driverRaces.MRData?.RaceTable.Races
+  );
+
+  const filteredDriverRaces = applyFilter(driverRaces.MRData?.RaceTable.Races);
 
   const allDrivers =
     driverList.MRData?.StandingsTable.StandingsLists[0].DriverStandings.map(
@@ -77,6 +84,15 @@ export const DriverDetail = () => {
           );
         })}
       </div>
+      <div>
+        <label htmlFor="filter">Search:</label>
+        <input
+          type="text"
+          id="filter"
+          value={filterTable}
+          onChange={handleFilterChange}
+        />
+      </div>
       <table>
         <tbody>
           <tr>
@@ -85,7 +101,7 @@ export const DriverDetail = () => {
             <th>Grid</th>
             <th>Race</th>
           </tr>
-          {driverRaces.MRData?.RaceTable.Races.map((races, i) => {
+          {filteredDriverRaces?.map((races, i) => {
             const { raceName } = races;
             const { position, grid } = races.Results[0];
             // const { driverId } = races.Results[0].Driver;

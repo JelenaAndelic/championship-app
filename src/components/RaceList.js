@@ -2,12 +2,27 @@ import React from "react";
 import { useGlobalContext } from "../context";
 import { findFlagUrlByCountryName } from "country-flags-svg";
 import { Link } from "react-router-dom";
+import useTableFilter from "../hooks/useTableFilter";
 
 export const RaceList = () => {
   const { raceList } = useGlobalContext();
+  const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
+    raceList.MRData?.RaceTable.Races
+  );
+
+  const filteredRaces = applyFilter(raceList.MRData?.RaceTable.Races);
 
   return (
     <>
+      <div>
+        <label htmlFor="filter">Search:</label>
+        <input
+          type="text"
+          id="filter"
+          value={filterTable}
+          onChange={handleFilterChange}
+        />
+      </div>
       <table>
         <tbody>
           <tr>
@@ -17,7 +32,7 @@ export const RaceList = () => {
             <th>Date</th>
             <th>Winner</th>
           </tr>
-          {raceList.MRData?.RaceTable.Races.map((race, i) => {
+          {filteredRaces.map((race, i) => {
             const { raceName, round, date } = race;
             const { circuitName, circuitId } = race.Circuit;
             const { familyName: winner } = race.Results[0].Driver;

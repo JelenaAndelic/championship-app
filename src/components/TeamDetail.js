@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Loading } from "./Loading";
 import { findFlagUrlByCountryName } from "country-flags-svg";
 import { findFlagUrlByNationality } from "country-flags-svg";
+import useTableFilter from "../hooks/useTableFilter";
 
 export const TeamDetail = () => {
   const { loading, setLoading } = useGlobalContext();
@@ -33,6 +34,12 @@ export const TeamDetail = () => {
     }
     getTeamResults();
   }, [params.constructorId]);
+
+  const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
+    teamResults?.MRData?.RaceTable.Races
+  );
+
+  const filteredTeamResults = applyFilter(teamResults?.MRData?.RaceTable.Races);
 
   if (loading) {
     return <Loading />;
@@ -67,6 +74,15 @@ export const TeamDetail = () => {
           }
         )}
       </div>
+      <div>
+        <label htmlFor="filter">Search:</label>
+        <input
+          type="text"
+          id="filter"
+          value={filterTable}
+          onChange={handleFilterChange}
+        />
+      </div>
       <table>
         <tbody>
           <tr>
@@ -76,7 +92,7 @@ export const TeamDetail = () => {
             <th>Webber</th>
             <th>Points</th>
           </tr>
-          {teamResults?.MRData?.RaceTable.Races.map((teamResult, i) => {
+          {filteredTeamResults?.map((teamResult, i) => {
             const { raceName } = teamResult;
             const { position: positionVet, points: pointVet } =
               teamResult.Results[0];
