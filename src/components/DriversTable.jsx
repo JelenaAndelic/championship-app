@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
 import { findFlagUrlByNationality } from "country-flags-svg";
-import GlobalFilter from "./GlobalFilter";
+
 import useTableFilter from "../hooks/useTableFilter";
 
 const DriversTable = (props) => {
@@ -12,25 +12,6 @@ const DriversTable = (props) => {
   const filteredDrivers = applyFilter(
     props.drivers.MRData.StandingsTable.StandingsLists[0].DriverStandings
   );
-
-  // const [filterTable, setFilterTable] = useState("");
-
-  // const handleFilterChange = (event) => {
-  //   setFilterTable(event.target.value);
-  // };
-
-  // const filteredDrivers =
-  //   filterTable.length >= 4
-  //     ? props.drivers.MRData.StandingsTable.StandingsLists[0].DriverStandings.filter(
-  //         (driver) =>
-  //           driver.Driver.givenName
-  //             .toLowerCase()
-  //             .includes(filterTable.toLowerCase()) ||
-  //           driver.Driver.familyName
-  //             .toLowerCase()
-  //             .includes(filterTable.toLowerCase())
-  //       )
-  //     : props.drivers.MRData.StandingsTable.StandingsLists[0].DriverStandings;
 
   return (
     <>

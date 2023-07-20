@@ -1,12 +1,12 @@
 import { findFlagUrlByCountryName } from "country-flags-svg";
 import useTableFilter from "../hooks/useTableFilter";
+import { Link } from "react-router-dom";
 
 const DriverDetailsTable = (props) => {
   const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
     props.data.MRData.RaceTable.Races
   );
 
-  console.log(props);
   const filteredDrivers = applyFilter(props.data.MRData.RaceTable.Races);
 
   return (
@@ -24,7 +24,7 @@ const DriverDetailsTable = (props) => {
       <table>
         <tbody>
           {filteredDrivers.map((driverResult, i) => {
-            const { raceName } = driverResult;
+            const { raceName, round } = driverResult;
             const { grid } = driverResult.Results[0];
             const { name } = driverResult.Results[0].Constructor;
             const { position } = driverResult.Results[0];
@@ -40,7 +40,7 @@ const DriverDetailsTable = (props) => {
                       country != "Korea" ? country : "South Korea"
                     )}
                   />{" "}
-                  {raceName}
+                  <Link to={`/races/${round}`}>{raceName}</Link>
                 </td>
                 <td>{name}</td>
                 <td>{grid}</td>

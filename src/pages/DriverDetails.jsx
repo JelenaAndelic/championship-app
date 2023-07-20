@@ -1,10 +1,14 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DriverDetailsTable from "../components/DriverDetailsTable";
 import { findFlagUrlByNationality } from "country-flags-svg";
 import externalLink from "../../public/external-link-svgrepo-com.svg";
+import DataLoader from "../components/DataLoader";
 
 const DriverDetails = () => {
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === "submitting";
   const [driverInfo, setDriverInfo] = useState([]);
 
   const driverDetailData = useLoaderData();
@@ -31,27 +35,36 @@ const DriverDetails = () => {
 
   return (
     <>
-      <div>
-        <img
-          style={{ width: 40, height: 20 }}
-          src={findFlagUrlByNationality(nationality)}
-          alt={nationality + "flag"}
-        />
-        {givenName} {familyName}
-      </div>
-      <ul>
-        {driverInfo.map((driver, i) => (
-          <li key={i}>{driver}</li>
-        ))}
-        <li>
-          Biography:{" "}
-          <Link to={url}>
-            {" "}
-            <img style={{ width: 40, height: 20 }} src={externalLink} />{" "}
-          </Link>
-        </li>
-      </ul>
-      <DriverDetailsTable data={tableData} />
+      {!isSubmitting ? (
+        <div>
+          <div>
+            <img
+              style={{ width: 40, height: 20 }}
+              src={findFlagUrlByNationality(nationality)}
+              alt={nationality + "flag"}
+            />
+            {givenName} {familyName}
+          </div>
+          <ul>
+            {driverInfo.map((driver, i) => (
+              <li key={i}>{driver}</li>
+            ))}
+            <li>
+              Biography:{" "}
+              <Link to={url}>
+                {" "}
+                <img
+                  style={{ width: 40, height: 20 }}
+                  src={externalLink}
+                />{" "}
+              </Link>
+            </li>
+          </ul>
+          <DriverDetailsTable data={tableData} />{" "}
+        </div>
+      ) : (
+        <DataLoader />
+      )}
     </>
   );
 };

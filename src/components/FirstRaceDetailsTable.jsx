@@ -1,12 +1,13 @@
 import { findFlagUrlByNationality } from "country-flags-svg";
 import useTableFilter from "../hooks/useTableFilter";
+import { Link } from "react-router-dom";
 
 const FirstRaceDetailsTable = (props) => {
   const [filterTable, handleFilterChange, applyFilter] = useTableFilter(
     props.data.MRData?.RaceTable.Races[0].QualifyingResults
   );
 
-  const filteredDrivers = applyFilter(
+  const filteredRaces = applyFilter(
     props.data.MRData?.RaceTable.Races[0].QualifyingResults
   );
 
@@ -24,8 +25,8 @@ const FirstRaceDetailsTable = (props) => {
       </div>
       <table>
         <tbody>
-          {filteredDrivers.map((race, i) => {
-            const { familyName } = race.Driver;
+          {filteredRaces.map((race, i) => {
+            const { familyName, driverId } = race.Driver;
             const { name: team } = race.Constructor;
             const { nationality } = race.Driver;
             const times = [race.Q1, race.Q2, race.Q3];
@@ -42,7 +43,7 @@ const FirstRaceDetailsTable = (props) => {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>
-                  {familyName}{" "}
+                  <Link to={`/${driverId}`}> {familyName} </Link>
                   <img
                     style={{ width: 40, height: 20 }}
                     src={findFlagUrlByNationality(nationality)}

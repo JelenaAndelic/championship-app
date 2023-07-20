@@ -12,6 +12,7 @@ const RacesDetails = () => {
 
   const [raceDetailData, qualifyingData, resultsData] = raceFullDetailData;
 
+  console.log(raceDetailData);
   const { raceName, date, url } = raceDetailData.MRData?.RaceTable.Races[0];
   const { locality: location, country } =
     raceDetailData.MRData?.RaceTable.Races[0].Circuit.Location;

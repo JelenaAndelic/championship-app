@@ -7,7 +7,7 @@ const TeamsTable = (props) => {
     props.teamData.MRData?.StandingsTable.StandingsLists[0].ConstructorStandings
   );
 
-  const filteredDrivers = applyFilter(
+  const filteredTeams = applyFilter(
     props.teamData.MRData?.StandingsTable.StandingsLists[0].ConstructorStandings
   );
 
@@ -25,7 +25,7 @@ const TeamsTable = (props) => {
       </div>
       <table>
         <tbody>
-          {filteredDrivers.map((team, i) => {
+          {filteredTeams.map((team, i) => {
             const { name, url, nationality, constructorId } = team.Constructor;
             const { points } = team;
 

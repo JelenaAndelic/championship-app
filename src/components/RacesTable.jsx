@@ -7,7 +7,7 @@ const RacesTable = (props) => {
     props.data.MRData.RaceTable.Races
   );
 
-  const filteredDrivers = applyFilter(props.data.MRData.RaceTable.Races);
+  const filteredRaces = applyFilter(props.data.MRData.RaceTable.Races);
   return (
     <>
       <div>Races Table</div>
@@ -22,7 +22,7 @@ const RacesTable = (props) => {
       </div>
       <table>
         <tbody>
-          {filteredDrivers.map((race, i) => {
+          {filteredRaces.map((race, i) => {
             const { raceName, round, date } = race;
             const { circuitName } = race.Circuit;
             const { familyName: winner } = race.Results[0].Driver;
