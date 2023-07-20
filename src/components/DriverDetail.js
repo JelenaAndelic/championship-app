@@ -6,6 +6,7 @@ import { Loading } from "./Loading";
 import { findFlagUrlByNationality } from "country-flags-svg";
 import { findFlagUrlByCountryName } from "country-flags-svg";
 import useTableFilter from "../hooks/useTableFilter";
+import { Link } from "react-router-dom";
 
 export const DriverDetail = () => {
   const { loading, setLoading, driverList } = useGlobalContext();
@@ -102,7 +103,7 @@ export const DriverDetail = () => {
             <th>Race</th>
           </tr>
           {filteredDriverRaces?.map((races, i) => {
-            const { raceName } = races;
+            const { raceName, round } = races;
             const { position, grid } = races.Results[0];
             // const { driverId } = races.Results[0].Driver;
             const { country } = races.Circuit.Location;
@@ -118,7 +119,7 @@ export const DriverDetail = () => {
                     )}
                     alt={country + "flag"}
                   />
-                  {raceName}
+                  <Link to={`/races/${round}`}>{raceName}</Link>
                 </td>
                 <td>{specificTeam}</td>
                 <td>{grid}</td>

@@ -7,6 +7,7 @@ import { findFlagUrlByNationality } from "country-flags-svg";
 import { findFlagUrlByCountryName } from "country-flags-svg";
 import useTableFilter from "../hooks/useTableFilter";
 import RaceResultsTable from "./RaceResultsTable";
+import { Link } from "react-router-dom";
 
 export const RaceDetail = () => {
   const { loading, setLoading } = useGlobalContext();
@@ -57,7 +58,9 @@ export const RaceDetail = () => {
             <h2>
               <img
                 style={{ width: 40, height: 20 }}
-                src={findFlagUrlByCountryName(country)}
+                src={findFlagUrlByCountryName(
+                  country !== "Korea" ? country : "South Korea"
+                )}
                 alt={country + "flag"}
               />
               {raceName}
@@ -113,7 +116,7 @@ export const RaceDetail = () => {
                     src={findFlagUrlByNationality(nationality)}
                     alt={nationality + "flag"}
                   />
-                  {familyName}
+                  <Link to={`/${driverId}`}>{familyName}</Link>
                 </td>
                 <td>{team}</td>
                 <td>{bestTime}</td>

@@ -5,6 +5,7 @@ import { Loading } from "./Loading";
 import { getRaceResults } from "../api/racesApi";
 import { findFlagUrlByNationality } from "country-flags-svg";
 import useTableFilter from "../hooks/useTableFilter";
+import { Link } from "react-router-dom";
 
 const RaceResultsTable = () => {
   const { loading, setLoading } = useGlobalContext();
@@ -68,7 +69,7 @@ const RaceResultsTable = () => {
                     src={findFlagUrlByNationality(nationality)}
                     alt={nationality + "flag"}
                   />
-                  {familyName}{" "}
+                  <Link to={`/${driverId}`}>{familyName}</Link>
                 </td>
                 <td>{team}</td>
                 <td>{time ? time : status}</td>

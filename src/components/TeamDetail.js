@@ -6,6 +6,7 @@ import { Loading } from "./Loading";
 import { findFlagUrlByCountryName } from "country-flags-svg";
 import { findFlagUrlByNationality } from "country-flags-svg";
 import useTableFilter from "../hooks/useTableFilter";
+import { Link } from "react-router-dom";
 
 export const TeamDetail = () => {
   const { loading, setLoading } = useGlobalContext();
@@ -93,7 +94,7 @@ export const TeamDetail = () => {
             <th>Points</th>
           </tr>
           {filteredTeamResults?.map((teamResult, i) => {
-            const { raceName } = teamResult;
+            const { raceName, round } = teamResult;
             const { position: positionVet, points: pointVet } =
               teamResult.Results[0];
             const { position: positionWeb, points: pointWeb } =
@@ -110,7 +111,7 @@ export const TeamDetail = () => {
                     )}
                     alt={country + "flag"}
                   />
-                  {raceName}
+                  <Link to={`/races/${round}`}>{raceName}</Link>
                 </td>
                 <td>{positionVet}</td>
                 <td>{positionWeb}</td>
